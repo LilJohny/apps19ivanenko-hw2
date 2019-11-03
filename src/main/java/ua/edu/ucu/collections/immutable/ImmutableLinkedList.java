@@ -9,17 +9,17 @@ public class ImmutableLinkedList implements ImmutableList {
     public ImmutableLinkedList(ImmutableLinkedList linkedList) {
         head = new Node(linkedList.head);
         Node previousNode = head;
-        Node currentNode = linkedList.head.next;
+        Node currentNode = linkedList.head.getNext();
         Node newNode = null;
-        while (currentNode.next != null) {
+        while (currentNode.getNext() != null) {
             newNode = new Node(currentNode);
-            previousNode.next = newNode;
-            newNode.previous = previousNode;
+            previousNode.setNext(newNode);
+            newNode.setPrevious(previousNode);
             previousNode = newNode;
-            currentNode = currentNode.next;
+            currentNode = currentNode.getNext();
         }
         tail = new Node(currentNode);
-        tail.previous = previousNode;
+        tail.setPrevious(previousNode);
         length = linkedList.size();
     }
 
@@ -46,7 +46,7 @@ public class ImmutableLinkedList implements ImmutableList {
         for (int i = 0; i < objects.length; i++) {
             nodes[i] = new Node(objects[i]);
             if (i - 1 >= 0) {
-                nodes[i - 1].next = nodes[i];
+                nodes[i - 1].setNext(nodes[i]);
             }
         }
         return nodes;
@@ -60,28 +60,28 @@ public class ImmutableLinkedList implements ImmutableList {
         if (head == null) {
             return null;
         }
-        return head.value;
+        return head.getValue();
     }
 
     public Object getLast() {
         if (tail == null) {
             return null;
         }
-        return tail.value;
+        return tail.getValue();
     }
 
     public ImmutableLinkedList removeFirst() {
         ImmutableLinkedList linkedList = new ImmutableLinkedList(this);
-        linkedList.head = linkedList.head.next;
-        linkedList.head.previous = null;
+        linkedList.head = linkedList.head.getNext();
+        linkedList.head.setPrevious(null);
         linkedList.length--;
         return linkedList;
     }
 
     public ImmutableLinkedList removeLast() {
         ImmutableLinkedList linkedList = new ImmutableLinkedList(this);
-        linkedList.tail = linkedList.tail.previous;
-        linkedList.tail.next = null;
+        linkedList.tail = linkedList.tail.getPrevious();
+        linkedList.tail.setNext(null);
         linkedList.length--;
         return linkedList;
     }
@@ -113,14 +113,14 @@ public class ImmutableLinkedList implements ImmutableList {
             Node[] nodes = convertToNodes(c);
             if (index + c.length < linkedList.length) {
                 Node finishNode = linkedList.getNode(index + c.length - 1);
-                finishNode.previous = nodes[nodes.length - 1];
+                finishNode.setPrevious(nodes[nodes.length - 1]);
             }
             if (index != 0) {
                 Node startNode = linkedList.getNode(index - 1);
-                startNode.next = nodes[0];
-                nodes[0].previous = startNode;
+                startNode.setNext(nodes[0]);
+                nodes[0].setPrevious( startNode);
             } else {
-                nodes[nodes.length - 1].next = linkedList.head;
+                nodes[nodes.length - 1].setNext( linkedList.head);
                 linkedList.head = nodes[nodes.length - 1];
             }
 
@@ -137,10 +137,10 @@ public class ImmutableLinkedList implements ImmutableList {
             int currentIndex = 0;
             Node currentNode = this.head;
             while (currentIndex != index) {
-                currentNode = currentNode.next;
+                currentNode = currentNode.getNext();
                 currentIndex++;
             }
-            return currentNode.value;
+            return currentNode.getValue();
         }
         throw new IndexOutOfBoundsException();
     }
@@ -150,7 +150,7 @@ public class ImmutableLinkedList implements ImmutableList {
             int currentIndex = 0;
             Node currentNode = this.head;
             while (currentIndex != index) {
-                currentNode = currentNode.next;
+                currentNode = currentNode.getNext();
                 currentIndex++;
             }
             return currentNode;
@@ -164,10 +164,10 @@ public class ImmutableLinkedList implements ImmutableList {
         if (index < size()) {
             ImmutableLinkedList linkedList = new ImmutableLinkedList(this);
             Node currentNode = (Node) linkedList.getNode(index);
-            Node parent = currentNode.previous;
-            Node child = currentNode.next;
-            parent.next = child;
-            child.previous = parent;
+            Node parent = currentNode.getPrevious();
+            Node child = currentNode.getNext();
+            parent.setNext(child);
+            child.setPrevious( parent);
             linkedList.length--;
             return linkedList;
         }
@@ -179,7 +179,7 @@ public class ImmutableLinkedList implements ImmutableList {
         if (index < size()) {
             ImmutableLinkedList linkedList = new ImmutableLinkedList(this);
             Node currentNode = (Node) linkedList.getNode(index);
-            currentNode.value = e;
+            currentNode.setValue( e);
             return linkedList;
         }
         throw new IndexOutOfBoundsException();
@@ -190,11 +190,11 @@ public class ImmutableLinkedList implements ImmutableList {
         int index = 0;
         Node currentNode = this.head;
         while (index != this.size()) {
-            if (currentNode.value == e) {
+            if (currentNode.getValue() == e) {
                 return index;
             } else {
                 index++;
-                currentNode = currentNode.next;
+                currentNode = currentNode.getNext();
             }
         }
         if (index == this.size()) {
@@ -224,9 +224,9 @@ public class ImmutableLinkedList implements ImmutableList {
         Node currentNode = head;
         int i = 0;
         while (currentNode != null) {
-            array[i] = currentNode.value;
+            array[i] = currentNode.getValue();
             i++;
-            currentNode = currentNode.next;
+            currentNode = currentNode.getNext();
         }
         return array;
     }
