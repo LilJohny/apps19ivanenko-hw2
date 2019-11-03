@@ -113,6 +113,10 @@ public class ImmutableLinkedListTest {
         assertTrue(result);
     }
     @Test
-    public void test
+    public void testSet(){
+        ImmutableLinkedList list = new ImmutableLinkedList(longArray);
+        list = (ImmutableLinkedList) list.set(0, 5);
+        assertEquals(list.get(0), 5);
+    }
     
 }

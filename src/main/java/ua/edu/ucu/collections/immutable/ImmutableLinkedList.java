@@ -175,8 +175,7 @@ public class ImmutableLinkedList implements ImmutableList {
         if (index < size()) {
             ImmutableLinkedList linkedList = new ImmutableLinkedList(this);
             Node currentNode = (Node) linkedList.getNode(index);
-            Node newNode = new Node(currentNode);
-            newNode.value = e;
+            currentNode.value = e;
             return linkedList;
         }
         throw new IndexOutOfBoundsException();
