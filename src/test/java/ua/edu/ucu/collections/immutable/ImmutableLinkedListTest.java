@@ -23,7 +23,7 @@ public class ImmutableLinkedListTest {
         simpleArrayExtended = new Object[]{0,1,2,3};
         longArray = new Object[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         insertedArray = new Object[]{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 3};
-        insertedArrayRemoved = new Object[]{1, 1, 2, 3, 5, 6, 7, 8, 9, 10, 2, 3};
+        insertedArrayRemoved = new Object[]{ 1, 2, 3, 5, 6, 7, 8, 9, 10, 2, 3};
         simpleArrayContinued = new Object[]{1, 2, 3, 4};
         insertedOutOfRangeArray = new Object[]{1, 2, 3, null, null, null, null, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 3};
     }
@@ -123,5 +123,26 @@ public class ImmutableLinkedListTest {
         ImmutableLinkedList list = new ImmutableLinkedList(longArray);
         list = (ImmutableLinkedList) list.addAll(20, new Object[]{1,2,3});
     }
-    
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testSetException(){
+        ImmutableLinkedList list = new ImmutableLinkedList(longArray);
+        list = (ImmutableLinkedList) list.set(20, 5);
+    }
+    @Test
+    public void testAddAllEnd(){
+        ImmutableLinkedList list = new ImmutableLinkedList(longArray);
+        list  = (ImmutableLinkedList) list.addAll(new Object[]{2,3});
+        assertArrayEquals(list.toArray(), insertedArray);
+    }
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testRemoveException(){
+        ImmutableLinkedList list = new ImmutableLinkedList(longArray);
+        list = (ImmutableLinkedList) list.remove(16);
+    }
+    @Test
+    public void testRemove(){
+        ImmutableLinkedList list = new ImmutableLinkedList(insertedArray);
+        ImmutableLinkedList result = (ImmutableLinkedList) list.remove(3);
+        assertArrayEquals(result.toArray(), insertedArrayRemoved);
+    }
 }

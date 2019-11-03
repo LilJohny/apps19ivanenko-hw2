@@ -158,13 +158,13 @@ public class ImmutableLinkedList implements ImmutableList {
     @Override
     public ImmutableList remove(int index) {
         if (index < size()) {
-            int currentIndex = 0;
             ImmutableLinkedList linkedList = new ImmutableLinkedList(this);
             Node currentNode = (Node) linkedList.getNode(index);
             Node parent = currentNode.previous;
             Node child = currentNode.next;
             parent.next = child;
             child.previous = parent;
+            linkedList.length--;
             return linkedList;
         }
         throw new IndexOutOfBoundsException();

@@ -6,11 +6,11 @@ public final class Node  {
     public  Node previous;
 
 
-    public Node(Object value){
+    public Node(Object value) {
         this.value = value;
     }
 
-    public Node(Node node){
+    public Node(Node node) {
         value = node.value;
         next = node.next;
         previous = node.previous;
