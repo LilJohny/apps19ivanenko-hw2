@@ -83,7 +83,7 @@ public class ImmutableLinkedList implements ImmutableList {
     public ImmutableLinkedList removeFirst() {
         ImmutableLinkedList linkedList = new ImmutableLinkedList(this);
         linkedList.head = linkedList.head.getNext();
-        if(linkedList.head != null) {
+        if (linkedList.head != null) {
             linkedList.head.setPrevious(null);
         }
         linkedList.length--;
@@ -137,8 +137,8 @@ public class ImmutableLinkedList implements ImmutableList {
             }
 
             linkedList.length += c.length;
-            if(linkedList.tail == null){
-                linkedList.tail = nodes[nodes.length-1];
+            if (linkedList.tail == null) {
+                linkedList.tail = nodes[nodes.length - 1];
             }
             return linkedList;
         }
