@@ -104,6 +104,10 @@ public class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public ImmutableList addAll(int index, Object[] c) {
+        if (this.length == 0){
+            ImmutableLinkedList linkedList = new ImmutableLinkedList(c);
+            return linkedList;
+        }
         if (index <= this.length) {
             ImmutableLinkedList linkedList = new ImmutableLinkedList(this);
             Node[] nodes = convertToNodes(c);
