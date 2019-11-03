@@ -8,7 +8,7 @@ public class Queue {
         list = new ImmutableLinkedList();
     }
     public Object peek() {
-        return list.getLast();
+        return list.getFirst();
     }
 
     public Object dequeue() {

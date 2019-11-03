@@ -7,27 +7,35 @@ public class ImmutableLinkedList implements ImmutableList {
 
 
     public ImmutableLinkedList(ImmutableLinkedList linkedList) {
-        head = new Node(linkedList.head);
-        Node previousNode = head;
-        Node currentNode = linkedList.head.getNext();
-        Node newNode = null;
-        while (currentNode.getNext() != null) {
-            newNode = new Node(currentNode);
-            previousNode.setNext(newNode);
-            newNode.setPrevious(previousNode);
-            previousNode = newNode;
-            currentNode = currentNode.getNext();
+        if (linkedList.length == 1) {
+            Node node = new Node(linkedList.head);
+            head = node;
+            length = 1;
+        } else {
+            head = new Node(linkedList.head);
+            Node previousNode = head;
+            Node currentNode = linkedList.head.getNext();
+            Node newNode = null;
+            while (currentNode.getNext() != null) {
+                newNode = new Node(currentNode);
+                previousNode.setNext(newNode);
+                newNode.setPrevious(previousNode);
+                previousNode = newNode;
+                currentNode = currentNode.getNext();
+            }
+            tail = new Node(currentNode);
+            tail.setPrevious(previousNode);
+            length = linkedList.size();
         }
-        tail = new Node(currentNode);
-        tail.setPrevious(previousNode);
-        length = linkedList.size();
     }
 
 
     public ImmutableLinkedList(Object[] objects) {
         Node[] nodes = convertToNodes(objects);
         head = nodes[0];
-        tail = nodes[nodes.length - 1];
+        if (objects.length != 1) {
+            tail = nodes[nodes.length - 1];
+        }
         length = objects.length;
     }
 
@@ -64,8 +72,10 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     public Object getLast() {
-        if (tail == null) {
+        if (tail == null && head == null) {
             return null;
+        } else if (tail == null) {
+            return head.getValue();
         }
         return tail.getValue();
     }
@@ -73,7 +83,9 @@ public class ImmutableLinkedList implements ImmutableList {
     public ImmutableLinkedList removeFirst() {
         ImmutableLinkedList linkedList = new ImmutableLinkedList(this);
         linkedList.head = linkedList.head.getNext();
-        linkedList.head.setPrevious(null);
+        if(linkedList.head != null) {
+            linkedList.head.setPrevious(null);
+        }
         linkedList.length--;
         return linkedList;
     }
@@ -104,7 +116,7 @@ public class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public ImmutableList addAll(int index, Object[] c) {
-        if (this.length == 0){
+        if (this.length == 0) {
             ImmutableLinkedList linkedList = new ImmutableLinkedList(c);
             return linkedList;
         }
@@ -118,13 +130,16 @@ public class ImmutableLinkedList implements ImmutableList {
             if (index != 0) {
                 Node startNode = linkedList.getNode(index - 1);
                 startNode.setNext(nodes[0]);
-                nodes[0].setPrevious( startNode);
+                nodes[0].setPrevious(startNode);
             } else {
-                nodes[nodes.length - 1].setNext( linkedList.head);
+                nodes[nodes.length - 1].setNext(linkedList.head);
                 linkedList.head = nodes[nodes.length - 1];
             }
 
             linkedList.length += c.length;
+            if(linkedList.tail == null){
+                linkedList.tail = nodes[nodes.length-1];
+            }
             return linkedList;
         }
         throw new IndexOutOfBoundsException();
@@ -167,7 +182,7 @@ public class ImmutableLinkedList implements ImmutableList {
             Node parent = currentNode.getPrevious();
             Node child = currentNode.getNext();
             parent.setNext(child);
-            child.setPrevious( parent);
+            child.setPrevious(parent);
             linkedList.length--;
             return linkedList;
         }
@@ -179,7 +194,7 @@ public class ImmutableLinkedList implements ImmutableList {
         if (index < size()) {
             ImmutableLinkedList linkedList = new ImmutableLinkedList(this);
             Node currentNode = (Node) linkedList.getNode(index);
-            currentNode.setValue( e);
+            currentNode.setValue(e);
             return linkedList;
         }
         throw new IndexOutOfBoundsException();

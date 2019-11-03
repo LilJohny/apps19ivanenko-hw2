@@ -63,7 +63,9 @@ public class ImmutableArrayList implements ImmutableList {
         if (index < this.length) {
             Object[] newArray = new Object[this.array.length - 1];
             System.arraycopy(this.array, 0, newArray, 0, index);
-            System.arraycopy(this.array, index + 1, newArray, index, this.array.length - 1 - (index));
+            int copyStart = index + 1;
+            int copyEnd = this.array.length - 1 - (index);
+            System.arraycopy(this.array, copyStart, newArray, index, copyEnd);
             return new ImmutableArrayList(newArray);
         }
         throw new IndexOutOfBoundsException();
