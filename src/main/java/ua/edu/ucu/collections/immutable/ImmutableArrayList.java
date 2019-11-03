@@ -2,7 +2,6 @@ package ua.edu.ucu.collections.immutable;
 
 public class ImmutableArrayList implements ImmutableList {
     private Object[] array;
-    private final int DEFAULT_SIZE = 10;
     private int length;
 
 

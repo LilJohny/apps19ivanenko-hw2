@@ -118,5 +118,10 @@ public class ImmutableLinkedListTest {
         list = (ImmutableLinkedList) list.set(0, 5);
         assertEquals(list.get(0), 5);
     }
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testAddAll(){
+        ImmutableLinkedList list = new ImmutableLinkedList(longArray);
+        list = (ImmutableLinkedList) list.addAll(20, new Object[]{1,2,3});
+    }
     
 }
