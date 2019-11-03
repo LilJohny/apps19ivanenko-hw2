@@ -3,7 +3,7 @@ import ua.edu.ucu.collections.immutable.ImmutableLinkedList;
 
 public class Stack {
     private ImmutableLinkedList list;
-    public Stack(){
+    public Stack() {
         list = new ImmutableLinkedList();
     }
     public Object peek() {

@@ -4,7 +4,7 @@ import ua.edu.ucu.collections.immutable.ImmutableLinkedList;
 
 public class Queue {
     private ImmutableLinkedList list;
-    public Queue(){
+    public Queue() {
         list = new ImmutableLinkedList();
     }
     public Object peek() {
