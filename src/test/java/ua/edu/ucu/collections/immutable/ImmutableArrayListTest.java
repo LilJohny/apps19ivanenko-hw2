@@ -138,4 +138,9 @@ public class ImmutableArrayListTest {
         int index = array.indexOf(5);
         assertEquals(index, -1);
     }
+    @Test
+    public void testCreateEmpty(){
+        ImmutableArrayList array = new ImmutableArrayList();
+        assertTrue(array.isEmpty());
+    }
 }
