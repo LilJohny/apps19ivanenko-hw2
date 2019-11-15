@@ -126,6 +126,7 @@ public class ImmutableLinkedList implements ImmutableList {
             if (index + c.length < linkedList.length) {
                 Node finishNode = linkedList.getNode(index + c.length - 1);
                 finishNode.setPrevious(nodes[nodes.length - 1]);
+                nodes[nodes.length - 1].setNext(finishNode);
             }
             if (index != 0) {
                 Node startNode = linkedList.getNode(index - 1);
@@ -139,6 +140,8 @@ public class ImmutableLinkedList implements ImmutableList {
             linkedList.length += c.length;
             if (linkedList.tail == null) {
                 linkedList.tail = nodes[nodes.length - 1];
+            } else if (index == size() - 1) {
+                nodes[nodes.length - 1].setNext(linkedList.tail);
             }
             return linkedList;
         }
