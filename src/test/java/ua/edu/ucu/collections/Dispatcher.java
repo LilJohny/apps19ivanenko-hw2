@@ -10,14 +10,6 @@ public class Dispatcher {
         functionalityTest(new ImmutableLinkedList());
         functionalityTest(new ImmutableArrayList());
         System.out.println("Congratulation! You make good work");
-        ImmutableArrayList a = new ImmutableArrayList();
-        a = (ImmutableArrayList) a.add(1);
-        a = (ImmutableArrayList) a.add(null);
-        a.indexOf(20);
-        ImmutableArrayList b = new ImmutableArrayList();
-        b = (ImmutableArrayList) b.add(1);
-        b = (ImmutableArrayList) b.add(20);
-        b.indexOf(null);
     }
 
     public static void functionalityTest(ImmutableList testList){
