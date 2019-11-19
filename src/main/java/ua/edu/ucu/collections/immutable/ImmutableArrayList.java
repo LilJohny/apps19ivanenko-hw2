@@ -83,6 +83,9 @@ public final class ImmutableArrayList implements ImmutableList {
 
     @Override
     public int indexOf(Object e) {
+        if (e == null){
+            return -1;
+        }
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(e)) {
                 return i;
